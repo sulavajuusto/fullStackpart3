@@ -77,14 +77,14 @@ app.put('/api/persons/:id', (request, response, next) => {
     name: body.name,
   }
 
-  Person.findByIdAndUpdate(request.params.id, person, { new: true })
+  Person.findByIdAndUpdate(request.params.id, person, { new: true, runValidators: true, context: 'query' })
     .then(updatedPerson => {
       response.json(updatedPerson)
     })
     .catch(error => next(error))
 })
 
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
  const body = request.body
 
 if (!body.name) {
@@ -121,7 +121,7 @@ person.save().then(result => {
   console.log(result);
   console.log(`Added ${body.name} number ${body.number} to the phonebook`);
   response.json(result)
-})
+}) .catch(error => next(error))
 
 
 })
