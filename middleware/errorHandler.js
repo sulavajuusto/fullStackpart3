@@ -1,0 +1,13 @@
+const errorHandler = (error, request, response, next) => {
+    console.log("fsafdsfsdds")
+    console.error(error.message)
+    console.error(error.name);
+    if (error.name === 'CastError') {
+
+      return response.status(400).send({ error: 'malformatted id' })
+    } 
+  
+    next(error)
+  }
+
+  module.exports = errorHandler;
